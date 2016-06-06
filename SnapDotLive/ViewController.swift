@@ -10,47 +10,58 @@ import UIKit
 import GPUImage
 import AVFoundation
 import Photos
+import MobileCoreServices
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet weak var renderView: RenderView!
     @IBOutlet weak var unsharpMaskSlider: UISlider!
     @IBOutlet weak var contrastSlider: UISlider!
     @IBOutlet weak var brightnessSlider: UISlider!
+    @IBOutlet weak var recordButton: UIBarButtonItem!
 
     var camera:Camera!
-    var unsharpMask:UnsharpMask!
-    var filterMode:BasicOperation!
-    var brightnessFilter: BrightnessAdjustment!
-    var fullColorFilter: BrightnessAdjustment!
-    var contrastFilter: ContrastAdjustment!
-    var greyscaleFilter: Luminance!
+    private let imagePicker = UIImagePickerController()
+    
+    var unsharpMask = UnsharpMask()
+    var brightnessFilter = BrightnessAdjustment()
+    var contrastFilter = ContrastAdjustment()
+    let greyscaleFilter = Luminance()
     var isRecording = false
     var movieOutput:MovieOutput? = nil
+    var picture:PictureInput!
     
     var fullColor = true
+    var useCamera = false
+    var disableCamera = false
+    
     private let tmpDir = NSURL(fileURLWithPath: NSTemporaryDirectory())
     private let videoOutputURL = NSURL(fileURLWithPath: NSTemporaryDirectory()).URLByAppendingPathComponent("MediaCache/OutputVideo.mov")
+    private var sourceURL = NSURL()
+    private var validURL = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        renderView.orientation = .Portrait
-        do {
-            camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
-            camera.runBenchmark = false
-            
-            unsharpMask = UnsharpMask()
-            brightnessFilter = BrightnessAdjustment()
-            brightnessFilter.brightness = 0.0
-            contrastFilter = ContrastAdjustment()
-            camera --> unsharpMask --> brightnessFilter --> contrastFilter --> renderView
-            
-            greyscaleFilter = Luminance()
+        imagePicker.delegate = self
 
-            camera.startCapture()
-        } catch {
-            fatalError("Could not initialize rendering pipeline: \(error)")
+        renderView.backgroundRenderColor = Color.White
+        renderView.fillMode = FillMode.PreserveAspectRatio
+        brightnessFilter.brightness = 0.0
+        
+        unsharpMask --> brightnessFilter --> contrastFilter --> renderView
+
+        if useCamera {
+            do {
+                camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
+//                camera.runBenchmark = false
+                camera --> unsharpMask
+                camera.startCapture()
+            } catch {
+                fatalError("Could not initialize rendering pipeline: \(error)")
+            }
+        } else {
+            useCamera = true // to enable photo picking button
         }
     }
     
@@ -59,6 +70,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func capture(sender: AnyObject) {
+        if !useCamera {
+            return
+        }
         if (!isRecording) {
             do {
                 self.isRecording = true
@@ -72,12 +86,12 @@ class ViewController: UIViewController {
                 camera.audioEncodingTarget = movieOutput
                 contrastFilter --> movieOutput!
                 movieOutput!.startRecording()
-                (sender as! UIBarButtonItem).title = "Stop"
+                recordButton.title = "Stop"
             } catch {
                 fatalError("Couldn't initialize movie, error: \(error)")
             }
         } else {
-            movieOutput?.finishRecording{
+            movieOutput?.finishRecording {
                 do {
                     let documentsDir = try NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true)
                     let fileURL = NSURL(string:"test.mp4", relativeToURL:documentsDir)!
@@ -98,7 +112,7 @@ class ViewController: UIViewController {
                                         print("Could not save movie to photo library: \(err)")
                                     }
                                     dispatch_async(dispatch_get_main_queue()) {
-                                        (sender as! UIBarButtonItem).title = "Record"
+                                        self.recordButton.title = "Record"
                                     }
                                     self.isRecording = false
                                     self.camera.audioEncodingTarget = nil
@@ -132,38 +146,118 @@ class ViewController: UIViewController {
         if fullColor {
             greyscaleFilter.removeAllTargets()
             unsharpMask --> brightnessFilter
-            (sender as! UIBarButtonItem).title = "Full Color"
+            (sender as! UIBarButtonItem).title = "Greyscale"
         } else {
             unsharpMask --> greyscaleFilter --> brightnessFilter
-            (sender as! UIBarButtonItem).title = "Greyscale"
+            (sender as! UIBarButtonItem).title = "Full Color"
+        }
+        if validURL {
+            picture.processImage()
+        }
+    }
+    
+    @IBAction func inputMode(sender: AnyObject) {
+        if isRecording {
+            capture(recordButton)  // to turn off recording
+            return
+        }
+        if disableCamera {
+            return
+        }
+        useCamera = !useCamera
+        if useCamera {
+            if validURL {
+                picture.removeAllTargets()
+                validURL = false
+            }
+            if camera == nil {
+                do {
+                    camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
+                    //                camera.runBenchmark = false
+                    camera --> unsharpMask
+                    camera.startCapture()
+                } catch {
+                    fatalError("Could not initialize rendering pipeline: \(error)")
+                }
+            }
+            camera --> unsharpMask
+            camera.startCapture()
+            (sender as! UIBarButtonItem).title = "Photo"
+           
+        } else {
+            if camera != nil {
+                camera.stopCapture()
+                camera.removeAllTargets()
+            }
+            imagePicker.sourceType = .PhotoLibrary
+            imagePicker.mediaTypes = [kUTTypeImage as String]
+            (sender as! UIBarButtonItem).title = "Camera"
+            
+            presentViewController(imagePicker, animated: true, completion: nil)
         }
     }
     
     @IBAction func unsharpMaskChanged(sender: AnyObject) {
         unsharpMask.intensity = unsharpMaskSlider.value
+        if validURL {
+            picture.processImage()
+        }
     }
     
     @IBAction func sharpButtonPressed(sender: AnyObject) {
         unsharpMaskSlider.value = 1.0
         unsharpMask.intensity = unsharpMaskSlider.value
+        if validURL {
+            picture.processImage()
+        }
     }
     
     @IBAction func contrastChanged(sender: AnyObject) {
         contrastFilter.contrast = contrastSlider.value
+        if validURL {
+            picture.processImage()
+        }
     }
     
     @IBAction func contrastButtonPressed(sender: AnyObject) {
         contrastSlider.value = 1.0
         contrastFilter.contrast = contrastSlider.value
+        if validURL {
+            picture.processImage()
+        }
     }
     
     @IBAction func brightnessChanged(sender: AnyObject) {
         brightnessFilter.brightness = brightnessSlider.value
+        if validURL {
+            picture.processImage()
+        }
     }
     
     @IBAction func brightnessButtonPressed(sender: AnyObject) {
         brightnessSlider.value = 0.0
         brightnessFilter.brightness = brightnessSlider.value
+        if validURL {
+            picture.processImage()
+        }
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let theImage = info[UIImagePickerControllerOriginalImage] as! UIImage!
+        validURL = true
+        dismissViewControllerAnimated(true, completion: nil)
+        if picture != nil {
+            picture.removeAllTargets()
+        }
+        picture = PictureInput(image: theImage!)
+        picture --> unsharpMask
+        picture.processImage()
+    }
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
 

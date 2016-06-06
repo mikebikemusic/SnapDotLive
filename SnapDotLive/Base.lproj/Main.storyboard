@@ -22,9 +22,15 @@
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="0Kf-gD-7vi"/>
-                                    <barButtonItem title="Full Color" id="ejC-h9-hp6">
+                                    <barButtonItem title="Greyscale" id="ejC-h9-hp6">
                                         <connections>
-                                            <action selector="colorMode:" destination="BYZ-38-t0r" id="rZC-ef-WKD"/>
+                                            <action selector="colorMode:" destination="BYZ-38-t0r" id="GXz-2y-oEl"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="PHR-OH-qRi"/>
+                                    <barButtonItem title="Photo" id="Pxm-hX-5Xc">
+                                        <connections>
+                                            <action selector="inputMode:" destination="BYZ-38-t0r" id="sPK-iT-tuH"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="En3-LB-vBx"/>
@@ -36,76 +42,84 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="jFH-aR-u8P"/>
                                 </items>
                             </toolbar>
-                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="Z5n-um-CBn">
-                                <rect key="frame" x="66" y="327" width="516" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="15" translatesAutoresizingMaskIntoConstraints="NO" id="Z5n-um-CBn">
+                                <rect key="frame" x="66" y="416" width="516" height="31"/>
                                 <connections>
                                     <action selector="unsharpMaskChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Gje-vd-tfL"/>
                                 </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="jAX-k1-qsP">
-                                <rect key="frame" x="66" y="371" width="516" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="jAX-k1-qsP">
+                                <rect key="frame" x="66" y="460" width="516" height="31"/>
                                 <connections>
                                     <action selector="contrastChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="MWy-7C-TSe"/>
                                 </connections>
                             </slider>
-                            <slider opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iO8-pD-THH">
-                                <rect key="frame" x="66" y="415" width="516" height="31"/>
+                            <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="-1" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="iO8-pD-THH">
+                                <rect key="frame" x="66" y="504" width="516" height="31"/>
                                 <connections>
                                     <action selector="brightnessChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yRv-kf-Rgo"/>
                                 </connections>
                             </slider>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvM-zF-XbN">
-                                <rect key="frame" x="21" y="326" width="41" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GvM-zF-XbN">
+                                <rect key="frame" x="21" y="415" width="41" height="30"/>
                                 <state key="normal" title="Sharp"/>
                                 <connections>
                                     <action selector="sharpButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5fc-gi-58U"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zW3-RH-B1r">
-                                <rect key="frame" x="22" y="370" width="39" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zW3-RH-B1r">
+                                <rect key="frame" x="22" y="459" width="39" height="30"/>
                                 <state key="normal" title="Contr"/>
                                 <connections>
                                     <action selector="contrastButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0Es-Av-VME"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZZ-mb-Z3O">
-                                <rect key="frame" x="20" y="414" width="42" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sZZ-mb-Z3O">
+                                <rect key="frame" x="20" y="503" width="42" height="30"/>
                                 <state key="normal" title="Bright"/>
                                 <connections>
                                     <action selector="brightnessButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q52-id-3EZ"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aas-ya-YMf" customClass="RenderView" customModule="GPUImage">
-                                <rect key="frame" x="20" y="20" width="560" height="292"/>
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aas-ya-YMf" customClass="RenderView" customModule="GPUImage">
+                                <rect key="frame" x="20" y="20" width="560" height="377"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Aas-ya-YMf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="2Y3-3g-KDT"/>
+                            <constraint firstItem="jAX-k1-qsP" firstAttribute="top" secondItem="Z5n-um-CBn" secondAttribute="bottom" constant="14" id="4lf-bY-fV3"/>
+                            <constraint firstItem="Z5n-um-CBn" firstAttribute="top" secondItem="Aas-ya-YMf" secondAttribute="bottom" constant="19" id="5Vg-uA-msJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Z5n-um-CBn" secondAttribute="trailing" constant="-9" id="61G-Qt-jIk"/>
                             <constraint firstItem="zW3-RH-B1r" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="2" id="7wc-x6-NvK"/>
+                            <constraint firstItem="zW3-RH-B1r" firstAttribute="top" secondItem="GvM-zF-XbN" secondAttribute="bottom" constant="14" id="BfQ-wD-hm9"/>
                             <constraint firstItem="sZZ-mb-Z3O" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="D9a-sA-46H"/>
                             <constraint firstItem="Z5n-um-CBn" firstAttribute="leading" secondItem="GvM-zF-XbN" secondAttribute="trailing" constant="6" id="EnZ-08-owM"/>
+                            <constraint firstItem="lDn-tw-rFu" firstAttribute="top" secondItem="iO8-pD-THH" secondAttribute="bottom" constant="22" id="MJs-eR-b1V"/>
+                            <constraint firstItem="sZZ-mb-Z3O" firstAttribute="top" secondItem="zW3-RH-B1r" secondAttribute="bottom" constant="14" id="PSK-L8-rhQ"/>
+                            <constraint firstItem="lDn-tw-rFu" firstAttribute="top" secondItem="sZZ-mb-Z3O" secondAttribute="bottom" constant="23" id="PjJ-VW-4pq"/>
                             <constraint firstItem="iO8-pD-THH" firstAttribute="leading" secondItem="sZZ-mb-Z3O" secondAttribute="trailing" constant="6" id="Q93-8D-MyX"/>
                             <constraint firstItem="jAX-k1-qsP" firstAttribute="leading" secondItem="zW3-RH-B1r" secondAttribute="trailing" constant="7" id="RC0-1Q-jel"/>
                             <constraint firstItem="lDn-tw-rFu" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="RoO-px-93D"/>
                             <constraint firstItem="iO8-pD-THH" firstAttribute="leading" secondItem="sZZ-mb-Z3O" secondAttribute="trailing" constant="6" id="TN2-g8-c9X"/>
                             <constraint firstItem="GvM-zF-XbN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="1" id="TQp-v2-zae"/>
                             <constraint firstItem="Z5n-um-CBn" firstAttribute="leading" secondItem="GvM-zF-XbN" secondAttribute="trailing" constant="6" id="WwG-Ty-to6"/>
+                            <constraint firstItem="GvM-zF-XbN" firstAttribute="top" secondItem="Aas-ya-YMf" secondAttribute="bottom" constant="18" id="ch2-cy-meS"/>
                             <constraint firstItem="Aas-ya-YMf" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="crz-zj-ug8"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lDn-tw-rFu" secondAttribute="trailing" constant="-20" id="dcm-9d-twJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iO8-pD-THH" secondAttribute="trailing" constant="-9" id="gda-rL-yAZ"/>
+                            <constraint firstItem="iO8-pD-THH" firstAttribute="top" secondItem="jAX-k1-qsP" secondAttribute="bottom" constant="14" id="h5K-kP-9pW"/>
+                            <constraint firstItem="Aas-ya-YMf" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="ilS-6x-Plj"/>
                             <constraint firstItem="Aas-ya-YMf" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="iqL-SQ-poz"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lDn-tw-rFu" secondAttribute="bottom" id="rgV-86-pZF"/>
                             <constraint firstItem="jAX-k1-qsP" firstAttribute="leading" secondItem="zW3-RH-B1r" secondAttribute="trailing" constant="7" id="yWd-dZ-OtK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jAX-k1-qsP" secondAttribute="trailing" constant="-9" id="ysc-Kt-ODN"/>
-                            <constraint firstItem="GvM-zF-XbN" firstAttribute="top" secondItem="Aas-ya-YMf" secondAttribute="bottom" constant="14" id="zVb-d3-fQB"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="brightnessSlider" destination="iO8-pD-THH" id="10A-EH-lZf"/>
                         <outlet property="contrastSlider" destination="jAX-k1-qsP" id="0uL-li-dr3"/>
+                        <outlet property="recordButton" destination="y0z-rm-e8x" id="BCi-3c-7jh"/>
                         <outlet property="renderView" destination="Aas-ya-YMf" id="2LK-3l-zBY"/>
                         <outlet property="unsharpMaskSlider" destination="Z5n-um-CBn" id="04N-Is-yAy"/>
                     </connections>

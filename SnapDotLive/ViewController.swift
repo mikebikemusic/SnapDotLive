@@ -128,12 +128,13 @@ class ViewController: UIViewController {
     
     @IBAction func colorMode(sender: AnyObject) {
         fullColor = !fullColor
-        camera.removeAllTargets()
+        unsharpMask.removeAllTargets()
         if fullColor {
-            camera --> unsharpMask --> brightnessFilter --> contrastFilter --> renderView
+            greyscaleFilter.removeAllTargets()
+            unsharpMask --> brightnessFilter
             (sender as! UIBarButtonItem).title = "Full Color"
         } else {
-            camera --> unsharpMask --> greyscaleFilter --> brightnessFilter --> contrastFilter --> renderView
+            unsharpMask --> greyscaleFilter --> brightnessFilter
             (sender as! UIBarButtonItem).title = "Greyscale"
         }
     }

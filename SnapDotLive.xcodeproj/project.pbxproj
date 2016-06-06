@@ -12,7 +12,58 @@
 		27FBDA8B1D04D302002B406A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27FBDA891D04D302002B406A /* Main.storyboard */; };
 		27FBDA8D1D04D302002B406A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27FBDA8C1D04D302002B406A /* Assets.xcassets */; };
 		27FBDA901D04D302002B406A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27FBDA8E1D04D302002B406A /* LaunchScreen.storyboard */; };
+		27FBDAB81D051A3A002B406A /* GPUImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 27FBDAB11D050FC3002B406A /* GPUImage.framework */; };
+		27FBDAB91D051A3A002B406A /* GPUImage.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 27FBDAB11D050FC3002B406A /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		27FBDABE1D051A62002B406A /* GPUImage.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 27FBDAB11D050FC3002B406A /* GPUImage.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		27FBDAB01D050FC3002B406A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27FBDA971D04D353002B406A /* GPUImage-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCD1B1251C66A262001F2BDC;
+			remoteInfo = GPUImage;
+		};
+		27FBDAB21D050FC3002B406A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27FBDA971D04D353002B406A /* GPUImage-iOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCD1B12F1C66A262001F2BDC;
+			remoteInfo = GPUImageTests;
+		};
+		27FBDABA1D051A3A002B406A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 27FBDA971D04D353002B406A /* GPUImage-iOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCD1B1241C66A262001F2BDC;
+			remoteInfo = GPUImage;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		27FBDABC1D051A3A002B406A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				27FBDAB91D051A3A002B406A /* GPUImage.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27FBDABD1D051A57002B406A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				27FBDABE1D051A62002B406A /* GPUImage.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		27FBDA821D04D302002B406A /* SnapDotLive.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SnapDotLive.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +73,7 @@
 		27FBDA8C1D04D302002B406A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27FBDA8F1D04D302002B406A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27FBDA911D04D302002B406A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27FBDA971D04D353002B406A /* GPUImage-iOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "GPUImage-iOS.xcodeproj"; path = "../framework/GPUImage-iOS.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27FBDAB81D051A3A002B406A /* GPUImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,8 +113,18 @@
 				27FBDA8C1D04D302002B406A /* Assets.xcassets */,
 				27FBDA8E1D04D302002B406A /* LaunchScreen.storyboard */,
 				27FBDA911D04D302002B406A /* Info.plist */,
+				27FBDA971D04D353002B406A /* GPUImage-iOS.xcodeproj */,
 			);
 			path = SnapDotLive;
+			sourceTree = "<group>";
+		};
+		27FBDAAC1D050FC3002B406A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27FBDAB11D050FC3002B406A /* GPUImage.framework */,
+				27FBDAB31D050FC3002B406A /* GPUImageTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,10 +137,13 @@
 				27FBDA7E1D04D302002B406A /* Sources */,
 				27FBDA7F1D04D302002B406A /* Frameworks */,
 				27FBDA801D04D302002B406A /* Resources */,
+				27FBDABC1D051A3A002B406A /* Embed Frameworks */,
+				27FBDABD1D051A57002B406A /* CopyFiles */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				27FBDABB1D051A3A002B406A /* PBXTargetDependency */,
 			);
 			name = SnapDotLive;
 			productName = SnapDotLive;
@@ -110,12 +176,35 @@
 			mainGroup = 27FBDA791D04D302002B406A;
 			productRefGroup = 27FBDA831D04D302002B406A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 27FBDAAC1D050FC3002B406A /* Products */;
+					ProjectRef = 27FBDA971D04D353002B406A /* GPUImage-iOS.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				27FBDA811D04D302002B406A /* SnapDotLive */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		27FBDAB11D050FC3002B406A /* GPUImage.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = GPUImage.framework;
+			remoteRef = 27FBDAB01D050FC3002B406A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27FBDAB31D050FC3002B406A /* GPUImageTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.xctest;
+			remoteRef = 27FBDAB21D050FC3002B406A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		27FBDA801D04D302002B406A /* Resources */ = {
@@ -141,6 +230,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		27FBDABB1D051A3A002B406A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImage;
+			targetProxy = 27FBDABA1D051A3A002B406A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		27FBDA891D04D302002B406A /* Main.storyboard */ = {
@@ -251,7 +348,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = SnapDotLive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orologics.SnapDotLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -262,7 +361,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = SnapDotLive/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.orologics.SnapDotLive;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -288,6 +389,7 @@
 				27FBDA961D04D302002B406A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -83,7 +83,25 @@
                             </button>
                             <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aas-ya-YMf" customClass="RenderView" customModule="GPUImage">
                                 <rect key="frame" x="20" y="20" width="560" height="377"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="27f-y1-lfi">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <variation key="heightClass=regular" fixedFrame="YES">
+                                            <rect key="frame" x="168" y="197" width="240" height="128"/>
+                                        </variation>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="27f-y1-lfi"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular">
+                                    <mask key="subviews">
+                                        <include reference="27f-y1-lfi"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -119,6 +137,7 @@
                     <connections>
                         <outlet property="brightnessSlider" destination="iO8-pD-THH" id="10A-EH-lZf"/>
                         <outlet property="contrastSlider" destination="jAX-k1-qsP" id="0uL-li-dr3"/>
+                        <outlet property="imageView" destination="27f-y1-lfi" id="OKz-Jh-Bda"/>
                         <outlet property="recordButton" destination="y0z-rm-e8x" id="BCi-3c-7jh"/>
                         <outlet property="renderView" destination="Aas-ya-YMf" id="2LK-3l-zBY"/>
                         <outlet property="unsharpMaskSlider" destination="Z5n-um-CBn" id="04N-Is-yAy"/>

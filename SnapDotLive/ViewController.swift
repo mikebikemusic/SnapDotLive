@@ -20,16 +20,26 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var brightnessSlider: UISlider!
     @IBOutlet weak var recordButton: UIBarButtonItem!
 
+    @IBOutlet weak var imageView: UIImageView!
     var camera:Camera!
     private let imagePicker = UIImagePickerController()
     
-    var unsharpMask = UnsharpMask()
-    var brightnessFilter = BrightnessAdjustment()
-    var contrastFilter = ContrastAdjustment()
+    let harrisCornerDetector = HarrisCornerDetector()
+    let blendFilter = AlphaBlend()
+    
+    let unsharpMask = UnsharpMask()
+    let brightnessFilter = BrightnessAdjustment()
+    let contrastFilter = ContrastAdjustment()
+    var lastFilter:ImageProcessingOperation?
     let greyscaleFilter = Luminance()
+    let greyFilter = Luminance()
     var isRecording = false
     var movieOutput:MovieOutput? = nil
     var picture:PictureInput!
+    let rawDataOutput = RawDataOutput()
+    let rawDataOutputGrey = RawDataOutput()
+    let rawDataInput = RawDataInput()
+    let algo = MyAlgo()
     
     var fullColor = true
     var useCamera = false
@@ -48,13 +58,31 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         renderView.backgroundRenderColor = Color.White
         renderView.fillMode = FillMode.PreserveAspectRatio
         brightnessFilter.brightness = 0.0
+
+        unsharpMask --> brightnessFilter --> contrastFilter  // do not insert any filter between unsharp and brightness without fixing the other references
+        lastFilter = contrastFilter
         
-        unsharpMask --> brightnessFilter --> contrastFilter --> renderView
+        lastFilter! --> renderView
+        lastFilter! --> rawDataOutput
+        lastFilter! --> rawDataOutputGrey
+
+        rawDataOutputGrey.pixelFormat = .Luminance
+//        rawDataInput --> renderView
+        
+        rawDataOutput.downloadBytes = { pixels, size, pixelFormat, imageOrientation in
+            let bytesPerRow = Int(size.width) * 4
+            set_rgba_image(Int(size.width), Int(size.height), bytesPerRow, pixels)
+//            self.rawDataInput.uploadBytes(pixels, size: size, pixelFormat: pixelFormat, orientation: imageOrientation)
+        }
+        rawDataOutputGrey.downloadBytes = { pixels, size, pixelFormat, imageOrientation in
+            let bytesPerRow = Int(size.width) * 4
+            set_grey_image(Int(size.width), Int(size.height), bytesPerRow, pixels)
+        }
 
         if useCamera {
             do {
                 camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
-//                camera.runBenchmark = false
+//                camera.runBenchmark = true
                 camera --> unsharpMask
                 camera.startCapture()
             } catch {
@@ -84,7 +112,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 }
                 movieOutput = try MovieOutput(URL:fileURL, size:Size(width:480, height:640), liveVideo:true)
                 camera.audioEncodingTarget = movieOutput
-                contrastFilter --> movieOutput!
+                lastFilter! --> movieOutput!
                 movieOutput!.startRecording()
                 recordButton.title = "Stop"
             } catch {
@@ -116,6 +144,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                                     }
                                     self.isRecording = false
                                     self.camera.audioEncodingTarget = nil
+                                    self.lastFilter!.removeAllTargets()
                                     self.movieOutput = nil
                             })
                             break
@@ -173,7 +202,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             if camera == nil {
                 do {
                     camera = try Camera(sessionPreset:AVCaptureSessionPreset640x480)
-                    //                camera.runBenchmark = false
+//                    camera.runBenchmark = true
                     camera --> unsharpMask
                     camera.startCapture()
                 } catch {
@@ -246,6 +275,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         let theImage = info[UIImagePickerControllerOriginalImage] as! UIImage!
+//        imageView.image = theImage
         validURL = true
         dismissViewControllerAnimated(true, completion: nil)
         if picture != nil {
@@ -262,4 +292,3 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 
 }
-
